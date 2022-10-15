@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 option(DTV "Enable video output" OFF)
 option(PIRANHA_ENABLED "Enable scripting input" ON)
-option(DISCORD_ENABLED "Enable Discord Rich Presence" ON)
+option(DISCORD_ENABLED "Enable Discord Rich Presence" OFF)
 
 if (DTV)
     add_compile_definitions(ATG_ENGINE_SIM_VIDEO_CAPTURE)
@@ -288,7 +288,8 @@ endif (PIRANHA_ENABLED)
 
 if (DISCORD_ENABLED)
     add_library(discord-rpc STATIC IMPORTED)
-    set_property(TARGET discord-rpc PROPERTY IMPORTED_LOCATION ${PROJECT_SOURCE_DIR}/dependencies/discord/lib/discord-rpc.lib)
+    set_property(TARGET discord-rpc PROPERTY IMPORTED_LOCATION_RELEASE ${PROJECT_SOURCE_DIR}/dependencies/discord/lib/discord-rpc.lib)
+    set_property(TARGET discord-rpc PROPERTY IMPORTED_LOCATION_DEBUG ${PROJECT_SOURCE_DIR}/dependencies/discord/lib/discord-rpcd.lib)
     target_link_libraries(engine-sim-app
     	discord
 	discord-rpc)
